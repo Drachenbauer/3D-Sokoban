@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/TargetMaterial.tres" type="Material" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+material = ExtResource( 1 )
+size = Vector3( 16, 4, 16 )
+
+[sub_resource type="Skin" id=2]
+
+[node name="Target" type="Spatial"]
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
+mesh = SubResource( 1 )
+skin = SubResource( 2 )
+skeleton = NodePath("../..")
+material/0 = null

@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/courbd.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/Game.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/OptionPanel.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+# Declare member variables heres:
+onready var game = $Game
+onready var first_person_screen = $FirstPerson
+onready var top_down_screen = $TopDown
+onready var level = $Level
+onready var pushes = $Pushes
+onready var boxes = $Boxes
+onready var on_target = $OnTarget
+onready var options = $OptionPanel
+
+var first_person_camera
+var top_down_camera
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	top_down_camera = game.get_node(\"TopDownViewport/Camera\")
+	top_down_camera.get_viewport().set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	top_down_screen.texture = top_down_camera.get_viewport().get_texture()
+	first_person_camera = game.get_node(\"FirstPersonViewport/Camera\")
+	first_person_camera.get_viewport().set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	first_person_screen.texture = first_person_camera.get_viewport().get_texture()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	update_Labels()
+	if Input.is_action_just_pressed(\"options\"):
+		options.visible = true
+		get_tree().paused = true
+
+
+func update_Labels():
+	level.text = \" Level: \" + str(G.level)
+	pushes.text = \" Pushes: \" + str(G.pushes)
+	boxes.text = \" Boxes: \" + str(G.boxes)
+	on_target.text = \" On target: \" + str(G.on_target)
+"
+
+[sub_resource type="Theme" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+outline_size = 2
+font_data = ExtResource( 1 )
+
+[node name="GameWindow" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Game" parent="." instance=ExtResource( 2 )]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 768.0
+margin_right = 1024.0
+margin_bottom = 768.0
+color = Color( 0.247059, 0.215686, 0, 1 )
+
+[node name="FirstPerson" type="Sprite" parent="."]
+position = Vector2( 384, 384 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 768, 768 )
+
+[node name="TopDown" type="Sprite" parent="."]
+position = Vector2( 896, 96 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 256, 192 )
+
+[node name="Level" type="Label" parent="."]
+margin_left = 768.0
+margin_top = 256.0
+margin_right = 1024.0
+margin_bottom = 320.0
+size_flags_vertical = 1
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = " Level:"
+valign = 1
+
+[node name="Pushes" type="Label" parent="."]
+margin_left = 768.0
+margin_top = 320.0
+margin_right = 1024.0
+margin_bottom = 384.0
+size_flags_vertical = 1
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = " Pushes:"
+valign = 1
+
+[node name="Boxes" type="Label" parent="."]
+margin_left = 768.0
+margin_top = 384.0
+margin_right = 1024.0
+margin_bottom = 448.0
+size_flags_vertical = 1
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = " Boxes:"
+valign = 1
+
+[node name="OnTarget" type="Label" parent="."]
+margin_left = 768.0
+margin_top = 448.0
+margin_right = 1024.0
+margin_bottom = 512.0
+size_flags_vertical = 1
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = " On Target:"
+valign = 1
+
+[node name="OptionPanel" parent="." instance=ExtResource( 3 )]
+
+[connection signal="refresh" from="OptionPanel" to="Game" method="_on_OptionPanel_refresh"]

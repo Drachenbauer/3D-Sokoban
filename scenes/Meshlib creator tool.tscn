@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Wall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Target.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var Meshlib = MeshLibrary.new()
+	Meshlib.create_item(0)
+	Meshlib.set_item_name(0, \"Wall\")
+	Meshlib.set_item_mesh(0, get_node(\"Wall/MeshInstance\").mesh)
+	ResourceSaver.save(\"res://assets/Wall.meshlib\", Meshlib)
+	
+	Meshlib = MeshLibrary.new()
+	Meshlib.create_item(0)
+	Meshlib.set_item_name(0, \"Target\")
+	Meshlib.set_item_mesh(0, get_node(\"Target/Spatial/MeshInstance\").mesh)
+	ResourceSaver.save(\"res://assets/Target.meshlib\", Meshlib)
+"
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="Wall" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
+
+[node name="Target" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0 )

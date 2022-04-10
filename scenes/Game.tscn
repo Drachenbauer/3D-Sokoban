@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Fader.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+
+# Declare member variables:
+onready var in_game = $InGame
+onready var camera = $FirstPersonViewport/Camera
+onready var fader = $Fader
+
+signal refresh
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	fader.fade_in()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	new_level()
+
+
+func camera_to_player(pos, rot):
+	camera.translation = pos
+	camera.rotation = rot
+
+
+func new_level():
+	if G.on_target == G.boxes:
+		if G.level < G.MAPS.size():
+			var animation = fader.fade_out()
+			yield(animation, \"animation_finished\")
+			get_tree().paused = false
+			G.level += 1
+			G.pushes = 0
+			G.boxes = 0
+			G.on_target = 0
+			G.pushes_player = []
+			G.pushes_boxes = []
+			get_tree().reload_current_scene()
+			fader.fade_in()
+		else:
+			win()
+
+
+func win():
+	get_tree().paused = true
+
+
+func _on_OptionPanel_refresh():
+	emit_signal(\"refresh\")
+"
+
+[node name="Game" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="InGame" type="Spatial" parent="."]
+
+[node name="Level" parent="InGame" instance=ExtResource( 2 )]
+
+[node name="TopDownViewport" type="Viewport" parent="."]
+size = Vector2( 256, 192 )
+debug_draw = 1
+render_target_v_flip = true
+render_target_clear_mode = 2
+
+[node name="Camera" type="Camera" parent="TopDownViewport"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 256, 512, 192 )
+projection = 1
+fov = 1.0
+size = 384.0
+far = 2000.0
+
+[node name="FirstPersonViewport" type="Viewport" parent="."]
+size = Vector2( 768, 768 )
+debug_draw = 1
+render_target_v_flip = true
+render_target_clear_mode = 2
+
+[node name="Camera" type="Camera" parent="FirstPersonViewport"]
+fov = 90.0
+far = 1000.0
+
+[node name="Fader" parent="." instance=ExtResource( 1 )]
+margin_right = 1056.0
+margin_bottom = 800.0
