@@ -87,3 +87,4 @@ far = 1000.0
 [node name="Fader" parent="." instance=ExtResource( 1 )]
 margin_right = 1056.0
 margin_bottom = 800.0
+mouse_filter = 2
