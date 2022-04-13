@@ -1,0 +1,24 @@
+[gd_resource type="MeshLibrary" load_steps=5 format=2]
+
+[ext_resource path="res://assets/Materials/TargetBricksMaterial.tres" type="Material" id=1]
+[ext_resource path="res://assets/Materials/TargetRockMaterial.tres" type="Material" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+material = ExtResource( 1 )
+size = Vector3( 16, 4, 16 )
+
+[sub_resource type="CubeMesh" id=2]
+material = ExtResource( 2 )
+size = Vector3( 16, 4, 16 )
+
+[resource]
+item/0/name = "TargetBricks"
+item/0/mesh = SubResource( 1 )
+item/0/mesh_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+item/0/shapes = [  ]
+item/0/navmesh_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+item/1/name = "TargetRock"
+item/1/mesh = SubResource( 2 )
+item/1/mesh_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+item/1/shapes = [  ]
+item/1/navmesh_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
