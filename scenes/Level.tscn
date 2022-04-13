@@ -18,6 +18,8 @@ onready var targets = $Targets
 onready var ground = get_parent().get_node(\"Ground\")
 onready var box_path = preload(\"res://scenes/Box.tscn\")
 onready var player_path = preload(\"res://scenes/Player.tscn\")
+onready var bricks = load(\"res://assets/materials/GroundBricksMaterial.tres\")
+onready var rock = load(\"res://assets/materials/GroundRockMaterial.tres\")
 
 var player
 var tile_size = get_cell_size()
@@ -25,6 +27,7 @@ var grid_size = Vector3(32, 1, 24)
 var target_grid = []
 var grid = []
 var level = 0
+var materials = [bricks, rock]
 
 enum {WALL, TARGET, BOX, PLAYER}
 
@@ -34,15 +37,15 @@ func _ready():
 	setup_grid()
 	generate_walls()
 	generate_targets()
+	ground.set_surface_material(0, materials[G.wall_type])
 	generate_boxes()
 	generate_player()
 	count_boxes_on_target()
 
 
 func _on_OptionPanel_refresh():
-	var bricks = load(\"res://assets/materials/GroundBricksMaterial.tres\")
-	var rock = load(\"res://assets/materials/GroundRockMaterial.tres\")
-	var materials = [bricks, rock]
+	generate_walls()
+	generate_targets()
 	ground.set_surface_material(0, materials[G.wall_type])
 
 
