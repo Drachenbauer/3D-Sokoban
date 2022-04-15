@@ -75,6 +75,7 @@ func generate_walls():
 	
 	print(get_cell_item(0, 0, 0))
 	print(get_cell_item(1, 0, 0))
+	print(get_used_cells())
 	
 
 

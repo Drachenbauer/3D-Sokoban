@@ -20,18 +20,22 @@ func _ready():
 	Meshlib.create_item(0)
 	Meshlib.set_item_name(0, \"WallBricks\")
 	Meshlib.set_item_mesh(0, get_node(\"WallBricks/MeshInstance\").mesh)
+	Meshlib.set_item_preview(0, ImageTexture.new())
 	Meshlib.create_item(1)
 	Meshlib.set_item_name(1, \"WallRock\")
 	Meshlib.set_item_mesh(1, get_node(\"WallRock/MeshInstance\").mesh)
+	Meshlib.set_item_preview(1, ImageTexture.new())
 	ResourceSaver.save(\"res://assets/meshlibs/Wall.tres\", Meshlib)
 	
 	Meshlib = MeshLibrary.new()
 	Meshlib.create_item(0)
 	Meshlib.set_item_name(0, \"TargetBricks\")
 	Meshlib.set_item_mesh(0, get_node(\"TargetBricks/Spatial/MeshInstance\").mesh)
+	Meshlib.set_item_preview(0, ImageTexture.new())
 	Meshlib.create_item(1)
 	Meshlib.set_item_name(1, \"TargetRock\")
 	Meshlib.set_item_mesh(1, get_node(\"TargetRock/Spatial/MeshInstance\").mesh)
+	Meshlib.set_item_preview(1, ImageTexture.new())
 	ResourceSaver.save(\"res://assets/meshlibs/Target.tres\", Meshlib)
 "
 

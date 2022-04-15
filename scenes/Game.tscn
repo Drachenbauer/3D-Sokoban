@@ -31,9 +31,11 @@ func camera_to_player(pos, rot):
 
 func new_level():
 	if G.on_target == G.boxes:
-		var animation = fader.fade_out()
+		var animation = fader.boxes_rainbow()
 		yield(animation, \"animation_finished\")
 		if G.level < G.MAPS.size():
+			animation = fader.fade_out()
+			yield(animation, \"animation_finished\")
 			G.level += 1
 			G.pushes = 0
 			G.boxes = 0
