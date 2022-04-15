@@ -11,6 +11,7 @@ script/source = "extends Spatial
 onready var in_game = $InGame
 onready var camera = $FirstPersonViewport/Camera
 onready var fader = $Fader
+onready var win = get_parent().get_node(\"Win\")
 
 signal refresh
 
@@ -44,11 +45,11 @@ func new_level():
 			G.pushes_boxes = []
 			get_tree().reload_current_scene()
 		else:
-			win()
+			win_game()
 
 
-func win():
-	pass
+func win_game():
+	win.visible = true
 
 
 func _on_OptionPanel_refresh():
