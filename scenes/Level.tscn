@@ -66,12 +66,16 @@ func generate_walls():
 		for z in range(G.MAPS[level - 1][y].size() - 1):
 			for x in range(G.MAPS[level - 1][y][z].size() - 1):
 				if G.MAPS[level - 1][y][z][x] == 1:
-					set_cell_item(x, y, z, G.wall_type, 10)
+					set_cell_item(x, y, z, G.wall_type, 0)
 	
 	var wall_positions = get_used_cells()
 	for wall_pos in wall_positions:
 		if wall_pos.x < grid_size.x and wall_pos.y < grid_size.y and wall_pos.z < grid_size.z:
 			grid[wall_pos.x][wall_pos.y][wall_pos.z] = WALL
+	
+	print(get_cell_item(0, 0, 0))
+	print(get_cell_item(1, 0, 0))
+	
 
 
 func generate_targets():
@@ -79,7 +83,7 @@ func generate_targets():
 		for z in range(G.MAPS[level - 1][y].size() - 1):
 			for x in range(G.MAPS[level - 1][y][z].size() - 1):
 				if G.MAPS[level - 1][y][z][x] == 2:
-					targets.set_cell_item(x, y, z, G.wall_type, 10)
+					targets.set_cell_item(x, y, z, G.wall_type, 0)
 	
 	var target_positions = targets.get_used_cells()
 	for target_pos in target_positions:
@@ -175,7 +179,7 @@ material/0 = null
 mesh_library = ExtResource( 2 )
 cell_size = Vector3( 16, 16, 16 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 0, 0, 0, 1, 0, 1 )
 }
 script = SubResource( 10 )
 __meta__ = {

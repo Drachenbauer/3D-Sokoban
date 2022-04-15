@@ -17,7 +17,6 @@ func _process(_delta):
 
 func fade_in():
 	animation.play(\"FadeIn\")
-	return animation
 
 
 func fade_out():

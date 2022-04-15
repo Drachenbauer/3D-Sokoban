@@ -17,6 +17,7 @@ signal refresh
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fader.fade_in()
+	get_tree().paused = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -30,10 +31,9 @@ func camera_to_player(pos, rot):
 
 func new_level():
 	if G.on_target == G.boxes:
+		var animation = fader.fade_out()
+		yield(animation, \"animation_finished\")
 		if G.level < G.MAPS.size():
-			var animation = fader.fade_out()
-			yield(animation, \"animation_finished\")
-			get_tree().paused = false
 			G.level += 1
 			G.pushes = 0
 			G.boxes = 0
@@ -41,13 +41,12 @@ func new_level():
 			G.pushes_player = []
 			G.pushes_boxes = []
 			get_tree().reload_current_scene()
-			fader.fade_in()
 		else:
 			win()
 
 
 func win():
-	get_tree().paused = true
+	pass
 
 
 func _on_OptionPanel_refresh():
