@@ -168,5 +168,4 @@ align = 1
 valign = 1
 
 [node name="Fader" parent="." instance=ExtResource( 1 )]
-margin_right = 1056.0
 margin_bottom = 808.0

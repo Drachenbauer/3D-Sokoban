@@ -8,6 +8,124 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "BrushPrefabs",
+"language": "GDScript",
+"path": "res://addons/Godoxel/BrushPrefabs.gd"
+}, {
+"base": "Node",
+"class": "GEAction",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Action.gd"
+}, {
+"base": "Node",
+"class": "GEAnimation",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Animation.gd"
+}, {
+"base": "GEAction",
+"class": "GEBrighten",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Brighten.gd"
+}, {
+"base": "GEAction",
+"class": "GEBrush",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Brush.gd"
+}, {
+"base": "GEAction",
+"class": "GEBucket",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Bucket.gd"
+}, {
+"base": "Control",
+"class": "GECanvas",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Canvas.gd"
+}, {
+"base": "GEAction",
+"class": "GECut",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Cut.gd"
+}, {
+"base": "GEAction",
+"class": "GEDarken",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Darken.gd"
+}, {
+"base": "Control",
+"class": "GEDraggableWindow",
+"language": "GDScript",
+"path": "res://addons/Godoxel/dialogs/DraggableWindow.gd"
+}, {
+"base": "Control",
+"class": "GEFrame",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Frame.gd"
+}, {
+"base": "Reference",
+"class": "GELayer",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Layer.gd"
+}, {
+"base": "GEAction",
+"class": "GELine",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Line.gd"
+}, {
+"base": "GEAction",
+"class": "GEMultiLine",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/MultiLine.gd"
+}, {
+"base": "GEAction",
+"class": "GEPasteCut",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/PasteCut.gd"
+}, {
+"base": "GEAction",
+"class": "GEPencil",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Pencil.gd"
+}, {
+"base": "GEAction",
+"class": "GERainbow",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Rainbow.gd"
+}, {
+"base": "GEAction",
+"class": "GERect",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Rect.gd"
+}, {
+"base": "Node",
+"class": "GEUtils",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Util.gd"
+} ]
+_global_script_class_icons={
+"BrushPrefabs": "",
+"GEAction": "",
+"GEAnimation": "",
+"GEBrighten": "",
+"GEBrush": "",
+"GEBucket": "",
+"GECanvas": "",
+"GECut": "",
+"GEDarken": "",
+"GEDraggableWindow": "",
+"GEFrame": "",
+"GELayer": "",
+"GELine": "",
+"GEMultiLine": "",
+"GEPasteCut": "",
+"GEPencil": "",
+"GERainbow": "",
+"GERect": "",
+"GEUtils": ""
+}
+
 [application]
 
 config/name="3D-Sokoban"
@@ -29,6 +147,10 @@ window/size/resizable=false
 window/size/test_width=1024
 window/size/test_height=768
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg" )
 
 [input]
 

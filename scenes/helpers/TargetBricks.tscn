@@ -10,10 +10,7 @@ size = Vector3( 16, 4, 16 )
 
 [node name="TargetBricks" type="Spatial"]
 
-[node name="Spatial" type="Spatial" parent="."]
-
-[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
+[node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
-skeleton = NodePath("../..")
 material/0 = null

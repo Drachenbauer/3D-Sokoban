@@ -19,49 +19,41 @@ var meshlib = MeshLibrary.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	meshlib.create_item(0)
-	meshlib.set_item_name(0, \"WallBricks\")
-	meshlib.set_item_mesh(0, get_node(\"WallBricks/MeshInstance\").mesh)
-	image_bricks = load(\"res://assets/meshlibs/WallBricks.tres\")
-	texture_bricks.create_from_image(image_bricks, 0)
-	meshlib.set_item_preview(0, texture_bricks)
-	meshlib.create_item(1)
-	meshlib.set_item_name(1, \"WallRock\")
-	meshlib.set_item_mesh(1, get_node(\"WallRock/MeshInstance\").mesh)
-	image_rock = load(\"res://assets/meshlibs/WallRock.tres\")
-	texture_rock.create_from_image(image_rock, 0)
-	meshlib.set_item_preview(1, texture_rock)
-	ResourceSaver.save(\"res://assets/meshlibs/Wall.tres\", meshlib)
+	generate_meshlib(\"Wall\")
 	
 	meshlib.clear()
 	
-	meshlib = MeshLibrary.new()
+	generate_meshlib(\"Target\")
+
+
+func generate_meshlib(type):
 	meshlib.create_item(0)
-	meshlib.set_item_name(0, \"TargetBricks\")
-	meshlib.set_item_mesh(0, get_node(\"TargetBricks/Spatial/MeshInstance\").mesh)
-	image_bricks = load(\"res://assets/meshlibs/TargetBricks.tres\")
+	print(\"%sBricks\" % type)
+	meshlib.set_item_name(0, \"%sBricks\" % type)
+	meshlib.set_item_mesh(0, get_node(\"%sBricks/MeshInstance\" % type).mesh)
+	image_bricks = load(\"res://assets/meshlibs/%sBricks.tres\" % type)
 	texture_bricks.create_from_image(image_bricks, 0)
 	meshlib.set_item_preview(0, texture_bricks)
 	meshlib.create_item(1)
-	meshlib.set_item_name(1, \"TargetRock\")
-	meshlib.set_item_mesh(1, get_node(\"TargetRock/Spatial/MeshInstance\").mesh)
-	image_rock = load(\"res://assets/meshlibs/TargetRock.tres\")
+	meshlib.set_item_name(1, \"%sRock\")
+	meshlib.set_item_mesh(1, get_node(\"%sRock/MeshInstance\" % type).mesh)
+	image_rock = load(\"res://assets/meshlibs/%sRock.tres\" % type)
 	texture_rock.create_from_image(image_rock, 0)
 	meshlib.set_item_preview(1, texture_rock)
-	ResourceSaver.save(\"res://assets/meshlibs/Target.tres\", meshlib)
+	ResourceSaver.save(\"res://assets/meshlibs/%s.tres\" % type, meshlib)
 "
 
 [node name="Spatial" type="Spatial"]
 script = SubResource( 1 )
 
-[node name="WallRock" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
-
-[node name="TargetRock" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 16 )
-
 [node name="WallBricks" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 8, 0 )
 
+[node name="WallRock" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
+
 [node name="TargetBricks" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, 16 )
+
+[node name="TargetRock" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 16 )
