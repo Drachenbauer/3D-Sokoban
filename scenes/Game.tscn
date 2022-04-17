@@ -13,8 +13,6 @@ onready var camera = $FirstPersonViewport/Camera
 onready var fader = $Fader
 onready var win = get_parent().get_node(\"Win\")
 
-signal refresh
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fader.fade_in()
@@ -50,10 +48,6 @@ func new_level():
 
 func win_game():
 	win.visible = true
-
-
-func _on_OptionPanel_refresh():
-	emit_signal(\"refresh\")
 "
 
 [node name="Game" type="Spatial"]
@@ -90,5 +84,3 @@ far = 1000.0
 margin_right = 1056.0
 margin_bottom = 800.0
 mouse_filter = 2
-
-[connection signal="refresh" from="." to="InGame/Level" method="_on_Game_refresh"]

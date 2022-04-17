@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/materials/GroundBricksMaterial.tres" type="Material" id=1]
 [ext_resource path="res://assets/materials/TargetRockMaterial.tres" type="Material" id=2]
 [ext_resource path="res://assets/materials/TargetBricksMaterial.tres" type="Material" id=3]
 [ext_resource path="res://assets/meshlibs/Wall.tres" type="MeshLibrary" id=4]
+[ext_resource path="res://scenes/OptionPanel.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=25]
 script/source = "extends Spatial
@@ -11,6 +12,7 @@ script/source = "extends Spatial
 onready var ground = $Ground
 onready var walls = $Walls
 onready var targets = $Targets
+onready var options = $CanvasLayer/OptionPanel
 onready var box_path = preload(\"res://scenes/Box.tscn\")
 onready var player_path = preload(\"res://scenes/Player.tscn\")
 onready var bricks = load(\"res://assets/materials/GroundBricksMaterial.tres\")
@@ -22,7 +24,7 @@ var grid_size = Vector3(32, 1, 24)
 var target_grid = []
 var grid = []
 var level = 0
-var materials = [bricks, rock]
+var materials = []
 
 enum {WALL, TARGET, BOX, PLAYER}
 
@@ -30,6 +32,7 @@ enum {WALL, TARGET, BOX, PLAYER}
 func _ready():
 	level = G.level
 	tile_size = walls.get_cell_size()
+	materials = [bricks, rock]
 	setup_grid()
 	ground.set_surface_material(0, materials[G.wall_type])
 	generate_walls()
@@ -39,7 +42,13 @@ func _ready():
 	count_boxes_on_target()
 
 
-func _on_Game_refresh():
+func _process(_delta):
+	if Input.is_action_just_pressed(\"options\"):
+		options.visible = true
+		get_tree().paused = true
+
+
+func _on_OptionPanel_refresh():
 	ground.set_surface_material(0, materials[G.wall_type])
 	generate_walls()
 	generate_targets()
@@ -247,3 +256,15 @@ __meta__ = {
 "_editor_clip_": 0,
 "_editor_floor_": Vector3( 0, 0, 0 )
 }
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="OptionPanel" parent="CanvasLayer" instance=ExtResource( 5 )]
+pause_mode = 2
+visible = false
+margin_left = 128.0
+margin_top = 256.0
+margin_right = -384.0
+margin_bottom = -256.0
+
+[connection signal="refresh" from="CanvasLayer/OptionPanel" to="." method="_on_OptionPanel_refresh"]

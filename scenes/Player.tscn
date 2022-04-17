@@ -24,8 +24,9 @@ const DIR = {
 \"W\" : {\"left\" : Vector3(0, 0, 1), \"right\" : Vector3(0, 0, -1), \"up\" : Vector3(-1, 0, 0), \"down\" : Vector3(1, 0, 0)},
 \"S\" : {\"left\" : Vector3(1, 0, 0), \"right\" : Vector3(-1, 0, 0), \"up\" : Vector3(0, 0, 1), \"down\" : Vector3(0, 0, -1)},
 \"E\" : {\"left\" : Vector3(0, 0, -1), \"right\" : Vector3(0, 0, 1), \"up\" : Vector3(1, 0, 0), \"down\" : Vector3(-1, 0, 0)}}
-const STEP = 16.0 / 60.0
-const ROT_STEP = PI / 2.0 / 60.0
+const STEP_COUNT = 60
+const POS_STEP = 16.0 / STEP_COUNT
+const ROT_STEP = deg2rad(90.0 / STEP_COUNT)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,9 +82,9 @@ func step_mov():
 			box.push(direction)
 		
 		step += 1
-		pos += STEP * direction
+		pos += POS_STEP * direction
 		
-		if step == 60:
+		if step == STEP_COUNT:
 			move = false
 			step = 0
 			pos = Vector3(round(pos.x), pos.y, round(pos.z))
@@ -121,7 +122,7 @@ func rot():
 			orientation.push_back(orientation[0])
 			orientation.pop_front()
 		rotL += 1
-		if rotL == 60:
+		if rotL == STEP_COUNT:
 			rotL = 0
 		rotate_y(ROT_STEP)
 				
@@ -130,7 +131,7 @@ func rot():
 			orientation.push_front(orientation[3])
 			orientation.pop_back()
 		rotR += 1
-		if rotR == 60:
+		if rotR == STEP_COUNT:
 			rotR = 0
 		rotate_y(-ROT_STEP)
 "
