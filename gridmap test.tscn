@@ -1,18 +1,41 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/meshlibs/Wall.tres" type="MeshLibrary" id=1]
 
-[node name="Spatial" type="Spatial"]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
 
-[node name="GridMap" type="GridMap" parent="."]
+
+# Declare member variables here:
+onready var walls = $Walls
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	print(G.MAPS[0].size())
+	for y in range(G.MAPS[0].size()):
+		for z in range(G.MAPS[0][y].size()):
+			for x in range(G.MAPS[0][y][z].size()):
+				if G.MAPS[0][y][z][x] == 1:
+					print(G.MAPS[0][y][z][x])
+					walls.set_cell_item(x, y, z, G.wall_type, 0)
+	
+	#walls.set_cell_item(2, 0, 2, G.wall_type, 0)
+"
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="Walls" type="GridMap" parent="."]
 mesh_library = ExtResource( 1 )
 cell_size = Vector3( 16, 16, 16 )
 data = {
-"cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 2, 0 )
+"cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 0, 2, 0 )
 }
 __meta__ = {
 "_editor_clip_": 0
 }
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 32, 32, 32 )
+transform = Transform( 0.707107, -0.612372, 0.353553, 0, 0.5, 0.866025, -0.707107, -0.612372, 0.353553, 256, 176, 256 )
+far = 1000.0

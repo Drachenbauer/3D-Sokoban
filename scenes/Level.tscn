@@ -8,9 +8,9 @@
 [sub_resource type="GDScript" id=25]
 script/source = "extends Spatial
 
+onready var ground = $Ground
 onready var walls = $Walls
 onready var targets = $Targets
-onready var ground = $Ground
 onready var box_path = preload(\"res://scenes/Box.tscn\")
 onready var player_path = preload(\"res://scenes/Player.tscn\")
 onready var bricks = load(\"res://assets/materials/GroundBricksMaterial.tres\")
@@ -58,9 +58,9 @@ func setup_grid():
 
 
 func generate_walls():
-	for y in range(G.MAPS[level - 1].size() - 1):
-		for z in range(G.MAPS[level - 1][y].size() - 1):
-			for x in range(G.MAPS[level - 1][y][z].size() - 1):
+	for y in range(G.MAPS[level - 1].size()):
+		for z in range(G.MAPS[level - 1][y].size()):
+			for x in range(G.MAPS[level - 1][y][z].size()):
 				if G.MAPS[level - 1][y][z][x] == 1:
 					walls.set_cell_item(x, y, z, G.wall_type, 0)
 	
@@ -71,9 +71,9 @@ func generate_walls():
 
 
 func generate_targets():
-	for y in range(G.MAPS[level - 1].size() - 1):
-		for z in range(G.MAPS[level - 1][y].size() - 1):
-			for x in range(G.MAPS[level - 1][y][z].size() - 1):
+	for y in range(G.MAPS[level - 1].size()):
+		for z in range(G.MAPS[level - 1][y].size()):
+			for x in range(G.MAPS[level - 1][y][z].size()):
 				if G.MAPS[level - 1][y][z][x] == 2:
 					targets.set_cell_item(x, y, z, G.wall_type, 0)
 	
@@ -230,7 +230,7 @@ material/0 = null
 mesh_library = ExtResource( 4 )
 cell_size = Vector3( 16, 16, 16 )
 data = {
-"cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 2, 0 )
+"cells": PoolIntArray(  )
 }
 __meta__ = {
 "_editor_clip_": 0
