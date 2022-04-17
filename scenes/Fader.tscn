@@ -73,6 +73,7 @@ tracks/0/keys = {
 }
 
 [node name="Fader" type="ColorRect"]
+pause_mode = 2
 margin_left = -32.0
 margin_top = -32.0
 margin_right = 288.0

@@ -13,6 +13,7 @@ script/source = "extends Spatial
 # Declare member variables here:
 onready var mesh_1 = $MeshInstance_1
 onready var mesh_2 = $MeshInstance_2
+onready var animation = $AnimationPlayer
 
 var grid
 var type
@@ -28,7 +29,7 @@ func _ready():
 	grid = get_parent()
 	type = grid.BOX
 	pos = translation
-	
+	animation.play(\"Base\")
 	check_display_state()
 
 
@@ -74,6 +75,7 @@ size = Vector3( 12, 12, 12 )
 
 [sub_resource type="Animation" id=5]
 resource_name = "Base"
+length = 0.01
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("MeshInstance_2:mesh:material:emission_texture")
