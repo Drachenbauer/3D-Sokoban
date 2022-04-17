@@ -76,8 +76,8 @@ tracks/0/keys = {
 pause_mode = 2
 margin_left = -32.0
 margin_top = -32.0
-margin_right = 288.0
-margin_bottom = 224.0
+margin_right = 1056.0
+margin_bottom = 800.0
 color = Color( 0, 0, 0, 1 )
 script = SubResource( 4 )
 

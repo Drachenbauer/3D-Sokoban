@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
+[ext_resource path="res://scenes/Fader.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Game.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/courbd.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/Style.tres" type="Theme" id=4]
@@ -15,6 +16,8 @@ onready var level = $Level
 onready var pushes = $Pushes
 onready var boxes = $Boxes
 onready var on_target = $OnTarget
+onready var win = $Win
+onready var fader = $Fader
 
 var first_person_camera
 var top_down_camera
@@ -27,10 +30,13 @@ func _ready():
 	first_person_camera = game.get_node(\"FirstPersonViewport/Camera\")
 	first_person_camera.get_viewport().set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	first_person_screen.texture = first_person_camera.get_viewport().get_texture()
+	fader.fade_in()
+	get_tree().paused = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	update_Labels()
+	new_level()
 
 
 func update_Labels():
@@ -38,6 +44,28 @@ func update_Labels():
 	pushes.text = \"Pushes: %s\" % G.pushes
 	boxes.text = \"Boxes: %s\" % G.boxes
 	on_target.text = \"On target: %s\" % G.on_target
+
+
+func new_level():
+	if G.on_target == G.boxes:
+		var animation = fader.boxes_rainbow()
+		yield(animation, \"animation_finished\")
+		if G.level < G.MAPS.size():
+			animation = fader.fade_out()
+			yield(animation, \"animation_finished\")
+			G.level += 1
+			G.pushes = 0
+			G.boxes = 0
+			G.on_target = 0
+			G.pushes_player = []
+			G.pushes_boxes = []
+			get_tree().reload_current_scene()
+		else:
+			win_game()
+
+
+func win_game():
+	win.visible = true
 "
 
 [sub_resource type="Theme" id=2]
@@ -138,3 +166,7 @@ custom_fonts/font = SubResource( 4 )
 text = "Win"
 align = 1
 valign = 1
+
+[node name="Fader" parent="." instance=ExtResource( 1 )]
+margin_right = 1056.0
+margin_bottom = 808.0
