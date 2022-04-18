@@ -31,6 +31,13 @@ enum {WALL, TARGET, BOX, PLAYER}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if G.file.file_exists(\"user://save.txt\"):
+		G.file.open(\"user://save.txt\", File.READ)
+		G.data = parse_json(G.file.get_line())
+		G.file.close()
+		G.level = G.data[\"level\"]
+		G.last_reached_level = G.data[\"last_reached_level\"]
+		G.wall_type = G.data[\"wall_type\"]
 	level = G.level
 	tile_size = walls.get_cell_size()
 	materials = [bricks, rock]
@@ -313,7 +320,6 @@ __meta__ = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="OptionPanel" parent="CanvasLayer" instance=ExtResource( 5 )]
-pause_mode = 2
 visible = false
 margin_left = 128.0
 margin_top = 256.0

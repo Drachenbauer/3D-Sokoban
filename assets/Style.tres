@@ -1,80 +1,13 @@
-[gd_resource type="Theme" load_steps=24 format=2]
+[gd_resource type="Theme" load_steps=25 format=2]
 
 [ext_resource path="res://assets/courbd.ttf" type="DynamicFontData" id=1]
-
-[sub_resource type="DynamicFont" id=2]
-size = 20
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.247059, 0.215686, 0, 1 )
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.121569, 0.105882, 0, 1 )
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 20
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.498039, 0.435294, 0, 1 )
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.74902, 0.654902, 0, 1 )
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.498039, 0.435294, 0, 1 )
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.623529, 0.545098, 0, 1 )
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.498039, 0.435294, 0, 1 )
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.372549, 0.32549, 0, 1 )
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.372549, 0.32549, 0, 1 )
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.247059, 0.215686, 0, 1 )
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color( 0, 0, 0, 0.631373 )
+[ext_resource path="res://assets/style_boxes/ButtonPressed.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/style_boxes/ButtonHover.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/style_boxes/ButtonFocus.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/style_boxes/ButtonDisabled.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/style_boxes/Button.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/style_boxes/Panel.tres" type="StyleBox" id=7]
+[ext_resource path="res://assets/style_boxes/CourierNewFont.tres" type="DynamicFont" id=8]
 
 [sub_resource type="DynamicFont" id=22]
 
@@ -201,12 +134,12 @@ Button/colors/font_color_disabled = Color( 0.74902, 0.654902, 0, 0.247059 )
 Button/colors/font_color_focus = Color( 0.74902, 0.654902, 0, 1 )
 Button/colors/font_color_hover = Color( 0.74902, 0.654902, 0, 1 )
 Button/colors/font_color_pressed = Color( 0.74902, 0.654902, 0, 1 )
-Button/fonts/font = SubResource( 2 )
-Button/styles/disabled = SubResource( 3 )
-Button/styles/focus = SubResource( 4 )
-Button/styles/hover = SubResource( 5 )
-Button/styles/normal = SubResource( 6 )
-Button/styles/pressed = SubResource( 7 )
+Button/fonts/font = ExtResource( 8 )
+Button/styles/disabled = ExtResource( 5 )
+Button/styles/focus = ExtResource( 4 )
+Button/styles/hover = ExtResource( 3 )
+Button/styles/normal = ExtResource( 6 )
+Button/styles/pressed = ExtResource( 2 )
 ColorPickerButton/colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
 ColorPickerButton/colors/font_color_disabled = Color( 0.74902, 0.654902, 0, 0.247059 )
 ColorPickerButton/colors/font_color_focus = Color( 0.74902, 0.654902, 0, 1 )
@@ -227,6 +160,23 @@ LineEdit/fonts/font = SubResource( 11 )
 LineEdit/styles/focus = SubResource( 8 )
 LineEdit/styles/normal = SubResource( 9 )
 LineEdit/styles/read_only = SubResource( 10 )
+MenuButton/styles/disabled = ExtResource( 5 )
+MenuButton/styles/focus = ExtResource( 4 )
+MenuButton/styles/hover = ExtResource( 3 )
+MenuButton/styles/normal = ExtResource( 6 )
+MenuButton/styles/pressed = ExtResource( 2 )
+PopupMenu/colors/font_color = Color( 0.74902, 0.654902, 0, 1 )
+PopupMenu/colors/font_color_accel = Color( 0.74902, 0.654902, 0, 1 )
+PopupMenu/colors/font_color_disabled = Color( 0.74902, 0.654902, 0, 0.247059 )
+PopupMenu/colors/font_color_hover = Color( 0.74902, 0.654902, 0, 1 )
+PopupMenu/colors/font_color_separator = Color( 0.74902, 0.654902, 0, 1 )
+PopupMenu/fonts/font = ExtResource( 8 )
+PopupMenu/styles/hover = ExtResource( 3 )
+PopupMenu/styles/labeled_separator_left = ExtResource( 7 )
+PopupMenu/styles/labeled_separator_right = ExtResource( 7 )
+PopupMenu/styles/panel = ExtResource( 7 )
+PopupMenu/styles/panel_disabled = ExtResource( 5 )
+PopupMenu/styles/separator = ExtResource( 7 )
 TabContainer/colors/font_color_bg = Color( 0.74902, 0.654902, 0, 1 )
 TabContainer/colors/font_color_disabled = Color( 0.74902, 0.654902, 0, 0.247059 )
 TabContainer/colors/font_color_fg = Color( 0.74902, 0.654902, 0, 1 )
