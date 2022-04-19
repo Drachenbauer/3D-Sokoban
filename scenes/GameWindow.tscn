@@ -38,8 +38,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	update_Labels()
+	
 	if G.on_target == G.boxes:
 		new_level()
+	
 	if Input.is_action_just_pressed(\"level\"):
 		level_panel.visible = true
 
@@ -60,26 +62,32 @@ func new_level():
 		yield(animation, \"animation_finished\")
 		G.level += 1
 		
-		if G.level > G.last_reached_level:
-			G.last_reached_level = G.level
+		if G.level > G.highest_reached_level:
+			G.highest_reached_level = G.level
 		
-		G.pushes = 0
-		G.boxes = 0
-		G.on_target = 0
-		G.pushes_player = []
-		G.pushes_boxes = []
-		G.data[\"level\"] = G.level
-		G.data[\"last_reached_level\"] = G.last_reached_level
-		G.data[\"wall_type\"] = G.wall_type
+		save_progress()
 		get_tree().reload_current_scene()
-		G.file.open(\"user://save.txt\", File.WRITE)
-		G.file.store_line(to_json(G.data))
-		G.file.close()
 	else:
 		win_game()
 
 
+func save_progress():
+	G.data[\"level\"] = G.level
+	G.data[\"highest_reached_level\"] = G.highest_reached_level
+	G.data[\"wall_type\"] = G.wall_type
+	G.file.open(\"user://save.txt\", File.WRITE)
+	G.file.store_line(to_json(G.data))
+	G.file.close()
+
+
+func load_level():
+	var animation = fader.fade_out()
+	yield(animation, \"animation_finished\")
+	get_tree().reload_current_scene()
+
+
 func win_game():
+	win.set_as_toplevel(true)
 	win.visible = true
 "
 

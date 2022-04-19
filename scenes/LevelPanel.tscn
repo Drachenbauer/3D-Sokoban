@@ -16,19 +16,21 @@ var selected_level = G.level
 func _ready():
 	var popup = level_button.get_popup()
 	var j = 0
-	for i in range(G.last_reached_level):
+	for i in range(G.highest_reached_level):
 		j = i + 1
 		popup.add_item(\"Level %s\" % j, i)
 	popup.connect(\"id_pressed\", self, \"_on_item_pressed\")
 
 
 func _on_item_pressed(id):
+	print(id)
 	selected_level = id + 1
+
 
 func _on_ButtonOK_pressed():
 	G.level = selected_level
 	visible = false
-	get_tree().reload_current_scene()
+	get_parent().load_level()
 
 
 func _on_ButtonCancel_pressed():

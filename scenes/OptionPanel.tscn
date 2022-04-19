@@ -9,31 +9,32 @@ script/source = "extends Control
 
 
 # Declare member variables here:
-var wall_type_old = 0
+var choosen_wall_type = G.wall_type
 
 signal refresh
 
 
 func _on_ButtonBricks_toggled(button_pressed):
 	if button_pressed:
-		G.wall_type = 0
+		choosen_wall_type = 0
 		
 
 func _on_ButtonRock_toggled(button_pressed):
 	if button_pressed:
-		G.wall_type = 1
+		choosen_wall_type = 1
 
 
 func _on_ButtonCancel_pressed():
-	G.wall_type = wall_type_old
+	choosen_wall_type = G.wall_type
 	get_tree().paused = false
 	visible = false
 
 
 func _on_ButtonOK_pressed():
-	wall_type_old = G.wall_type
+	G.wall_type = choosen_wall_type
+	get_tree().paused = false
+	emit_signal(\"refresh\")
 	visible = false
-	get_parent().new_level()
 "
 
 [node name="OptionPanel" type="Control"]
