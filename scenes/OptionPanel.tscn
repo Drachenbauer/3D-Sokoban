@@ -98,9 +98,9 @@ group = ExtResource( 4 )
 text = "Rock"
 
 [node name="ButtonCancel" type="Button" parent="Panel"]
-margin_left = 40.0
+margin_left = 32.0
 margin_top = 208.0
-margin_right = 232.0
+margin_right = 224.0
 margin_bottom = 240.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 2 )

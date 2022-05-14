@@ -19,26 +19,24 @@ var meshlib = MeshLibrary.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	generate_meshlib(\"Wall\")
-	
-	meshlib.clear()
-	
-	generate_meshlib(\"Target\")
+	generate_meshlib(\"Wall\", 0)
+	#meshlib.clear()
+	generate_meshlib(\"Target\", 2)
+	ResourceSaver.save(\"res://assets/meshlibs/WallsTargets.tres\", meshlib)
 
 
-func generate_meshlib(type):
-	meshlib.create_item(0)
-	print(\"%sBricks\" % type)
-	meshlib.set_item_name(0, \"%sBricks\" % type)
-	meshlib.set_item_mesh(0, get_node(\"%sBricks/MeshInstance\" % type).mesh)
-	texture_bricks = load(\"res://assets/meshlibs/%sBricks.tres\" % type)
-	meshlib.set_item_preview(0, texture_bricks)
-	meshlib.create_item(1)
-	meshlib.set_item_name(1, \"%sRock\")
-	meshlib.set_item_mesh(1, get_node(\"%sRock/MeshInstance\" % type).mesh)
-	texture_rock = load(\"res://assets/meshlibs/%sRock.tres\" % type)
-	meshlib.set_item_preview(1, texture_rock)
-	ResourceSaver.save(\"res://assets/meshlibs/%s.tres\" % type, meshlib)
+func generate_meshlib(type, id):
+	meshlib.create_item(id)
+	meshlib.set_item_name(id, \"%sBricks\" % type)
+	meshlib.set_item_mesh(id, get_node(\"%sBricks/MeshInstance\" % type).mesh)
+	texture_bricks = load(\"res://assets/meshlibs/%sBricks.png\" % type)
+	meshlib.set_item_preview(id, texture_bricks)
+	meshlib.create_item(id + 1)
+	meshlib.set_item_name(id + 1, \"%sRock\" % type)
+	meshlib.set_item_mesh(id + 1, get_node(\"%sRock/MeshInstance\" % type).mesh)
+	texture_rock = load(\"res://assets/meshlibs/%sRock.png\" % type)
+	meshlib.set_item_preview(id + 1, texture_rock)
+	#ResourceSaver.save(\"res://assets/meshlibs/%s.tres\" % type, meshlib)
 "
 
 [node name="Spatial" type="Spatial"]
