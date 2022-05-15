@@ -27,7 +27,7 @@ enum {WALL, TARGET, BOX, PLAYER}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if !G.is_save_file_loaded:
-		load_save_file()
+		load_from_save_file()
 		G.is_save_file_loaded = true
 	
 	G.pushes = 0
@@ -45,12 +45,12 @@ func _ready():
 	count_boxes_on_target()
 
 
-func load_save_file():
+func load_from_save_file():
 	if G.file.file_exists(\"user://save.txt\"):
 		G.file.open(\"user://save.txt\", File.READ)
 		G.data = parse_json(G.file.get_line())
 		G.file.close()
-		G.level = G.data[\"level\"]
+		G.level = G.data[\"highest_reached_level\"]
 		G.highest_reached_level = G.data[\"highest_reached_level\"]
 		G.wall_type = G.data[\"wall_type\"]
 
@@ -84,15 +84,10 @@ func generate_walls_and_targets():
 			for x in range(G.MAPS[G.level][y][z].size()):
 				if G.MAPS[G.level][y][z][x] == 1:
 					walls_targets.set_cell_item(x, y, z, G.wall_type, 0)
+					grid[x][y][z] = WALL
 				elif G.MAPS[G.level][y][z][x] == 2:
 					walls_targets.set_cell_item(x, y, z, G.wall_type + 2, 0)
-	
-	var positions = walls_targets.get_used_cells()
-	for pos in positions:
-		if walls_targets.get_cell_item(pos.x, pos.y, pos.z) == G.wall_type:
-			grid[pos.x][pos.y][pos.z] = WALL
-		elif walls_targets.get_cell_item(pos.x, pos.y, pos.z) == G.wall_type + 2:
-			target_grid[pos.x][pos.y][pos.z] = TARGET
+					target_grid[x][y][z] = TARGET
 
 
 func generate_boxes():

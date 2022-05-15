@@ -359,7 +359,7 @@ const BOX_POSITIONS = [
 		Vector3(13, 0, 6),
 		Vector3(13, 0, 9),
 		Vector3(14, 0, 4),
-		Vector3(13, 0, 6),
+		Vector3(14, 0, 6),
 		Vector3(14, 0, 8),
 		Vector3(15, 0, 4),
 		Vector3(15, 0, 6),
