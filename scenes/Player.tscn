@@ -18,6 +18,7 @@ var direction = Vector3(0, 0, 0)
 var orientation = [\"N\", \"W\", \"S\", \"E\"]
 var rotL = 0
 var rotR = 0
+var boxes
 
 const DIR = {
 \"N\" : {\"left\" : Vector3(-1, 0, 0), \"right\" : Vector3(1, 0, 0), \"up\" : Vector3(0, 0, -1), \"down\" : Vector3(0, 0, 1)},
@@ -33,6 +34,7 @@ func _ready():
 	grid = get_parent()
 	type = grid.PLAYER
 	pos = translation
+	boxes = get_tree().get_nodes_in_group(\"Boxes\")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -68,7 +70,6 @@ func start_mov(key):
 			G.pushes_player.append(pos)
 			G.pushes_boxes.append([])
 			
-			var boxes = get_tree().get_nodes_in_group(\"Boxes\")
 			for box in boxes:
 				G.pushes_boxes[G.pushes].append(box.pos)
 			
@@ -77,7 +78,6 @@ func start_mov(key):
 
 func step_mov():
 	if move:
-		var boxes = get_tree().get_nodes_in_group(\"Boxes\")
 		for box in boxes:
 			box.push(direction)
 		
@@ -103,7 +103,6 @@ func undo_step():
 		grid.update_child_pos_undo(self)
 		G.pushes_player.remove(G.pushes)
 		
-		var boxes = get_tree().get_nodes_in_group(\"Boxes\")
 		for box in boxes:
 			box.undo_pos = box.translation
 			box.translation = G.pushes_boxes[G.pushes][0]
