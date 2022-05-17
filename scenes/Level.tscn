@@ -29,14 +29,8 @@ func _ready():
 	if !G.is_save_file_loaded:
 		load_from_save_file()
 		G.is_save_file_loaded = true
-	
-	G.pushes = 0
-	G.boxes = 0
-	G.on_target = 0
-	G.pushes_player = []
-	G.pushes_boxes = []
-	tile_size = walls_targets.get_cell_size()
-	materials = [bricks, rock]
+		
+	prepare_values()
 	setup_grid()
 	ground.set_surface_material(0, materials[G.wall_type])
 	generate_walls_and_targets()
@@ -50,9 +44,19 @@ func load_from_save_file():
 		G.file.open(\"user://save.txt\", File.READ)
 		G.data = parse_json(G.file.get_line())
 		G.file.close()
-		G.level = G.data[\"highest_reached_level\"]
 		G.highest_reached_level = G.data[\"highest_reached_level\"]
 		G.wall_type = G.data[\"wall_type\"]
+		G.level = G.highest_reached_level
+
+
+func prepare_values():
+	G.pushes = 0
+	G.boxes = 0
+	G.on_target = 0
+	G.pushes_player = []
+	G.pushes_boxes = []
+	tile_size = walls_targets.get_cell_size()
+	materials = [bricks, rock]
 
 
 func _process(_delta):
@@ -91,20 +95,22 @@ func generate_walls_and_targets():
 
 
 func generate_boxes():
-	for box_pos in G.BOX_POSITIONS[G.level]:
+	for pos in G.BOX_POSITIONS[G.level]:
 		var box = box_path.instance()
-		box.translation = walls_targets.map_to_world(box_pos.x, box_pos.y, box_pos.z)
+		box.translation = walls_targets.map_to_world(pos.x, pos.y, pos.z)
 		add_child(box)
-		grid[box_pos.x][box_pos.y][box_pos.z] = BOX
+		grid[pos.x][pos.y][pos.z] = BOX
 		G.boxes += 1
+	
+	G.boxes_instances = get_tree().get_nodes_in_group(\"Boxes\")
 
 
 func generate_player():
-	var player_pos = G.PLAYER_POSITIONS[G.level]
+	var pos = G.PLAYER_POSITIONS[G.level]
 	player = player_path.instance()
-	player.translation = walls_targets.map_to_world(player_pos.x, player_pos.y, player_pos.z)
+	player.translation = walls_targets.map_to_world(pos.x, pos.y, pos.z)
 	add_child(player)
-	grid[player_pos.x][player_pos.y][player_pos.z] = PLAYER
+	grid[pos.x][pos.y][pos.z] = PLAYER
 
 #called by player to know, if can move to the next cell
 func is_valid_move(pos, direction):
