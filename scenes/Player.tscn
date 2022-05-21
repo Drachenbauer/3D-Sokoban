@@ -16,8 +16,8 @@ var old_pos = Vector3(0, 0, 0)
 var undo_pos = Vector3(0, 0, 0)
 var direction = Vector3(0, 0, 0)
 var orientation = [\"N\", \"W\", \"S\", \"E\"]
-var rotL = 0
-var rotR = 0
+var rot = 0
+var rot_dir = 0
 
 const DIR = {
 \"N\" : {\"left\" : Vector3(-1, 0, 0), \"right\" : Vector3(1, 0, 0), \"up\" : Vector3(0, 0, -1), \"down\" : Vector3(0, 0, 1)},
@@ -36,12 +36,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	prepare_move()
-	rot()
-	get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
+	check_controls()
+	step_mov()
+	step_rot()
+	if move:
+		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 
-
-func prepare_move():
+func check_controls():
 	if !move:
 		if Input.is_action_pressed(\"left\"):
 			start_mov(\"left\")
@@ -51,10 +52,28 @@ func prepare_move():
 			start_mov(\"up\")
 		elif Input.is_action_pressed(\"down\"):
 			start_mov(\"down\")
+		elif Input.is_action_pressed(\"rot_left\"):
+			start_rot(1)
+		elif Input.is_action_pressed(\"rot_right\"):
+			start_rot(-1)
 		elif Input.is_action_just_pressed(\"undo\"):
 			undo_step()
-	
-	step_mov()
+
+
+func undo_step():
+	if !G.pushes_player.size() == 0:
+		G.pushes -= 1
+		undo_pos = translation
+		translation = G.pushes_player[G.pushes]
+		pos = translation
+		grid.update_child_pos_undo(self)
+		G.pushes_player.remove(G.pushes)
+		
+		for box in G.boxes_instances:
+			box.undo_step()
+		
+		G.pushes_boxes.remove(G.pushes)
+		grid.count_boxes_on_target()
 
 
 func start_mov(key):
@@ -75,7 +94,7 @@ func start_mov(key):
 
 
 func step_mov():
-	if move:
+	if move and rot_dir == 0:
 		for box in G.boxes_instances:
 			box.push(direction)
 		
@@ -92,40 +111,30 @@ func step_mov():
 		translation = pos
 
 
-func undo_step():
-	if !G.pushes_player.size() == 0:
-		G.pushes -= 1
-		undo_pos = translation
-		translation = G.pushes_player[G.pushes]
-		pos = translation
-		grid.update_child_pos_undo(self)
-		G.pushes_player.remove(G.pushes)
-		
-		for box in G.boxes_instances:
-			box.undo_step()
-		
-		G.pushes_boxes.remove(G.pushes)
-		grid.count_boxes_on_target()
+func start_rot(key):
+	move = true
+	rot = 0
+	rot_dir = key 
+	if rot_dir < 0:
+		orientation.push_front(orientation[3])
+		orientation.pop_back()
+	elif rot_dir > 0:
+		orientation.push_back(orientation[0])
+		orientation.pop_front()
 
-
-func rot():
-	if Input.is_key_pressed(KEY_Q) && step == 0 && rotR == 0 || rotL != 0:
-		if rotL == 0:
-			orientation.push_back(orientation[0])
-			orientation.pop_front()
-		rotL += 1
-		if rotL == STEP_COUNT:
-			rotL = 0
-		rotate_y(ROT_STEP)
-				
-	if Input.is_key_pressed(KEY_E) && step == 0 && rotL == 0 || rotR != 0:
-		if rotR == 0:
-			orientation.push_front(orientation[3])
-			orientation.pop_back()
-		rotR += 1
-		if rotR == STEP_COUNT:
-			rotR = 0
-		rotate_y(-ROT_STEP)
+	
+func step_rot():
+	if move and !rot_dir == 0:
+		step += 1
+		rot += ROT_STEP * rot_dir
+		
+		if step == STEP_COUNT:
+			move = false
+			step = 0
+			rot = round(rot)
+			rot_dir = 0
+		
+		rotation_degrees.y = rot
 "
 
 [sub_resource type="SpatialMaterial" id=12]

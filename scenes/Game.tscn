@@ -8,7 +8,12 @@ script/source = "extends Spatial
 
 # Declare member variables:
 onready var camera = $FirstPersonViewport/Camera
+onready var player = $InGame/Level/Player
 
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	camera_to_player(player.translation, player.rotation_degrees)
 
 func camera_to_player(pos, rot):
 	camera.translation = pos
