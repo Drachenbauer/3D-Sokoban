@@ -1,16 +1,18 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/materials/TargetBricksMaterial.tres" type="Material" id=1]
-
 [sub_resource type="CubeMesh" id=1]
-material = ExtResource( 1 )
-size = Vector3( 16, 4, 16 )
+size = Vector3( 16, 2, 16 )
 
-[sub_resource type="Skin" id=2]
+[sub_resource type="StreamTexture" id=3]
+flags = 19
+load_path = "res://.import/TargetBricks.png-a46ef9bbe13dae3a04e26306314f0523.s3tc.stex"
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
+albedo_texture = SubResource( 3 )
 
 [node name="TargetBricks" type="Spatial"]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
-skin = SubResource( 2 )
-material/0 = null
+material/0 = SubResource( 2 )

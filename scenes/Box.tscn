@@ -50,6 +50,15 @@ func push(dir):
 		check_display_state()
 
 
+func undo_step():
+	undo_pos = translation
+	translation = G.pushes_boxes[G.pushes][0]
+	pos = translation
+	grid.update_child_pos_undo(self)
+	check_display_state()
+	G.pushes_boxes[G.pushes].remove(0)
+
+
 func check_display_state():
 	if is_on_target():
 		mesh_1.visible = false

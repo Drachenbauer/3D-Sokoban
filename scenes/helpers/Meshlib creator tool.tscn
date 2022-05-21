@@ -23,6 +23,7 @@ func _ready():
 	#meshlib.clear()
 	generate_meshlib(\"Target\", 2)
 	ResourceSaver.save(\"res://assets/meshlibs/WallsTargets.tres\", meshlib)
+	print(\"meshlib saved\")
 
 
 func generate_meshlib(type, id):
@@ -49,7 +50,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 8, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
 
 [node name="TargetBricks" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, 16 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 16 )
 
 [node name="TargetRock" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 16 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16 )
