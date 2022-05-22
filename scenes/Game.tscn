@@ -10,14 +10,21 @@ script/source = "extends Spatial
 onready var camera = $FirstPersonViewport/Camera
 onready var player = $InGame/Level/Player
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	camera_to_player()
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	camera_to_player(player.translation, player.rotation_degrees)
 
-func camera_to_player(pos, rot):
-	camera.translation = pos
-	camera.rotation = rot
+func camera_to_player():
+	var cam_pos = camera.translation
+	var cam_rot = camera.rotation_degrees
+	var player_pos = player.translation
+	var player_rot = player.rotation_degrees
+	if !(cam_pos == player_pos && cam_rot == player_rot):
+		cam_pos = player_pos
+		cam_rot = player_rot
+		camera.translation = cam_pos
+		camera.rotation_degrees = cam_rot
 "
 
 [node name="Game" type="Spatial"]

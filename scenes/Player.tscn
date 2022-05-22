@@ -33,6 +33,7 @@ func _ready():
 	grid = get_parent()
 	type = grid.PLAYER
 	pos = translation
+	rot = rotation_degrees.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -107,7 +108,6 @@ func step_mov():
 			grid.count_boxes_on_target()
 		
 		translation = pos
-		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 
 
 func start_rot(key):
@@ -133,7 +133,6 @@ func step_rot():
 			rot_dir = 0
 		
 		rotation_degrees.y = rot
-		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 "
 
 [sub_resource type="SpatialMaterial" id=12]
