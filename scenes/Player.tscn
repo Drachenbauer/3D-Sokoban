@@ -126,6 +126,11 @@ func step_rot():
 		step += 1
 		rot += ROT_STEP * rot_dir
 		
+		if rot < -180:
+			rot += 360
+		elif rot > 180:
+			rot -= 360
+		
 		if step == STEP_COUNT:
 			move = false
 			step = 0
