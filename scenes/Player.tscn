@@ -26,7 +26,7 @@ const DIR = {
 \"E\" : {\"left\" : Vector3(0, 0, -1), \"right\" : Vector3(0, 0, 1), \"up\" : Vector3(1, 0, 0), \"down\" : Vector3(-1, 0, 0)}}
 const STEP_COUNT = 60
 const POS_STEP = 16.0 / STEP_COUNT
-const ROT_STEP = deg2rad(90.0 / STEP_COUNT)
+const ROT_STEP = 90.0 / STEP_COUNT
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,8 +39,6 @@ func _process(_delta):
 	check_controls()
 	step_mov()
 	step_rot()
-	if move:
-		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 
 func check_controls():
 	if !move:
@@ -109,11 +107,11 @@ func step_mov():
 			grid.count_boxes_on_target()
 		
 		translation = pos
+		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 
 
 func start_rot(key):
 	move = true
-	rot = 0
 	rot_dir = key 
 	if rot_dir < 0:
 		orientation.push_front(orientation[3])
@@ -135,6 +133,7 @@ func step_rot():
 			rot_dir = 0
 		
 		rotation_degrees.y = rot
+		get_tree().get_root().get_node(\"GameWindow/Game\").camera_to_player(translation, rotation)
 "
 
 [sub_resource type="SpatialMaterial" id=12]
